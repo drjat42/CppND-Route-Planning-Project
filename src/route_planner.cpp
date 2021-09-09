@@ -17,7 +17,7 @@ float RoutePlanner::CalculateHValue(RouteModel::Node const *node) {
 }
 
 void RoutePlanner::AddNeighbors(RouteModel::Node *current_node) {
-    auto g = current_node->g_value;
+    const auto g = current_node->g_value;
     current_node->FindNeighbors();
     for(auto neighbor : current_node->neighbors) {
         if (neighbor->visited) {
@@ -32,14 +32,14 @@ void RoutePlanner::AddNeighbors(RouteModel::Node *current_node) {
 }
 
 bool Compare(const  RouteModel::Node *a, const RouteModel::Node *b) {
-    float f_a = a->h_value + a->g_value;
-    float f_b = b->h_value + b->g_value;
+    const float f_a = a->h_value + a->g_value;
+    const float f_b = b->h_value + b->g_value;
     return f_a > f_b;
 }
 
 RouteModel::Node *RoutePlanner::NextNode() {
     std::sort(open_list.begin(), open_list.end(), Compare);
-    auto next_node = open_list.back();
+    const auto next_node = open_list.back();
     open_list.pop_back();
     return next_node;
 }
